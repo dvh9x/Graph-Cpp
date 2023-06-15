@@ -430,3 +430,42 @@ void DoiMauButton(dinh a)
 		}
 	}
 	
+		
+	void Init()
+	{
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				if (G[i][j]!=0)
+					G1[i][j]=G[i][j];
+				else G1[i][j]=MAXX;
+			}
+			chuaxet[i]=true;
+			C[i]=0;
+		}
+	}
+	
+	void Init1()
+	{
+		for (int i=1;i<=n;i++)
+		{
+			for (int j=1;j<=n;j++)
+			{
+				if (G[i-1][j-1]!=0)
+					G2[i][j]=1;
+				else G2[i][j]=0;
+			}
+			C[i]=0;
+		}
+	}
+	
+	void Init2()
+	{
+		for (int i=0;i<n;i++)
+		{
+				chuaxet[i]=true;
+				truoc[i]=999;
+		}
+	}
+
