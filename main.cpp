@@ -880,3 +880,540 @@ void DoiMauButton(dinh a)
 		}
 	}
 	
+		void clearmouse()
+	{
+	clearmouseclick(WM_LBUTTONDOWN);
+	clearmouseclick(WM_RBUTTONDOWN);
+	clearmouseclick(WM_LBUTTONDBLCLK);
+	}
+float KhoangCach(int x1, int y1, int x2, int y2)
+	{
+		float kc;
+		kc = sqrt((float)(x1 - x2)*(x1 - x2) + (float)(y1 - y2)*(y1 - y2));
+		return kc;
+	}
+	
+	bool IsDinh(int x,int y)
+	{
+		for(int i=0;i<n;i++)
+		{
+			if (KhoangCach(x,y,dothi[i].x,dothi[i].y)<=BK)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	string xoaKiTu(string a)
+	{
+		string s = "";
+		for (int i = 0; i < a.length() - 1; i++)
+			s += a[i];
+		return s;
+	}
+	
+	char* StringToChar(string c)
+	{
+		char *temp = new char[4];
+		int i = 0;
+		for (; i < c.length(); i++)
+		{
+			temp[i] = c[i];
+		}
+		temp[i] = '\0';
+		return temp;
+	}
+	char* TenDinh()
+	{
+		HuongDan();
+		char c;
+		char* kq = new char[3];
+		string s;
+		outtextxy(370, 520, "Nhap toi da 3 chu, nhan ENTER de ket thuc");
+		outtextxy(370, 540, "Ten dinh: ");
+		outtextxy(495, 540, &s[0]);
+		int i = 0;
+		do{
+			fflush(stdin);
+			while (!kbhit());
+			c = getch();
+			if (c != 13 && c != 8 && i < 3 && ((c>=65 && c<=90) ||(c>=97 && c<=122) ))
+			{
+				i++;
+				s += c;
+			}
+			else if (c == 8 && i > 0){
+				i--;
+				s = xoaKiTu(s);
+			}
+			kq = StringToChar(s);
+			HuongDan();
+			outtextxy(370, 520, "Nhap toi da 3 chu, nhan ENTER de ket thuc");
+			outtextxy(370, 540, "Ten dinh: ");
+			outtextxy(495, 540, &s[0]);
+			if (n-1 >2 )
+			{
+				for (int j = 0; j < n-1; j++)
+				{
+					if (strcmp(kq, dothi[j].name) == 0)
+					{
+						do
+						{
+							fflush(stdin);
+						} 
+						while (!kbhit());
+						c = getch();
+						if (c != 13 && c != 8 && i < 3 && c >= 65 && c <= 90)
+						{
+							i++;
+							s += c;
+						}
+						else if (c == 8 && i > 0){
+							i--;
+							s = xoaKiTu(s);
+						}
+						kq = StringToChar(s);
+
+					}
+				}
+			}
+			HuongDan();
+			outtextxy(370, 520, "Nhap toi da 3 chu, nhan ENTER de ket thuc");
+			outtextxy(370, 540, "Nhap ten dinh: ");
+			outtextxy(495, 540, &s[0]);
+		} while (c != 13 || i == 0);
+		return kq;
+	}
+	
+	void TaoDinh()
+	{	
+		clearmouse();
+		int x, y;
+		char* c = new char[3];
+		HuongDan();
+		outtextxy(370, 520, "Click vao noi can tao dinh");
+		while (n<=MAX-1)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN, x, y);
+				if (x >= (465+BK) && x <= (1250-BK) && y >= (30+BK) && y <= (480-BK) && x!=-1 && y!=-1 && !IsDinh(x,y))
+				{
+					dothi[n].x = x;
+					dothi[n].y = y;
+					setfillstyle(1, 5);
+					setcolor(5);
+					pieslice(dothi[n].x, dothi[n].y, 0, 0, BK);
+					n++;
+					break;
+				}
+			}
+
+		};
+		dothi[n - 1].name = new char[3];
+		c = TenDinh();
+		c = strupr(c);
+		if (n > 1)
+		{
+			ad:
+			for (int i = 0; i < n; i++)
+			{
+				while (strcmp(c, dothi[i].name) == 0)
+				{
+					c = TenDinh();
+					c = strupr(c);
+					goto ad;
+				}
+			}
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			dothi[n - 1].name[i] = c[i];
+		}
+		setcolor(15);
+		outtextxy(dothi[n - 1].x - 9, dothi[n - 1].y - 9, dothi[n - 1].name);
+		ResetDoThi();
+	}
+
+	void VeDinh()
+	{
+		for (int i=0;i<n;i++)
+		{
+		setfillstyle(1, 5);
+		setcolor(5);
+		pieslice(dothi[i].x, dothi[i].y, 0, 0, BK);	
+		setcolor(15);
+		outtextxy(dothi[i].x - 9, dothi[i].y - 9, dothi[i].name);
+		}
+		MTTS();
+		note();
+	}
+	
+	void VeDinh1(dinh a)
+	{
+	setfillstyle(1, 5);
+	setcolor(5);
+	pieslice(a.x, a.y, 0, 0, BK);
+	setcolor(15);	
+	outtextxy(a.x - 9, a.y - 9, a.name);	
+	}
+
+	bool IsDinh1(int x, int y, dinh a)
+	{
+		
+			if (KhoangCach(x,y,a.x,a.y) <= BK)
+			{
+				return true;
+			}
+		return false;
+	}
+	
+	void VeMuiTen(dinh dau, dinh cuoi, int color)
+	{
+	const int R = 12;
+	const double PI = 3.14159265;
+	dinh d1, d2, d3, d;
+	setcolor(color);
+	line(dau.x, dau.y, cuoi.x, cuoi.y);
+	d.x = (dau.x + cuoi.x) / 2;
+	d.y = (dau.y + cuoi.y) / 2;
+	setcolor(BLACK);
+	double result;
+	double param = 0;
+	struct arccoordstype h;
+	if (cuoi.x > dau.x && cuoi.y < dau.y){
+		param = 1.0*(dau.y - cuoi.y) / (cuoi.x - dau.x);
+		result = atan(param) * 180 / PI;
+		arc(d.x, d.y, 0, result + 90, R);
+		getarccoords(&h);
+		d1.x = h.xend;
+		d1.y = h.yend;
+		arc(d.x, d.y, result + 90, result + 90 + 180, R);
+		getarccoords(&h);
+		d2.x = h.xend;
+		d2.y = h.yend;
+		arc(d.x, d.y, 0, result, R);
+		getarccoords(&h);
+		d3.x = h.xend;
+		d3.y = h.yend;
+	}
+	else if (cuoi.x < dau.x && cuoi.y > dau.y){
+		param = 1.0*(cuoi.y - dau.y) / (dau.x - cuoi.x);
+		result = atan(param) * 180 / PI;
+		arc(d.x, d.y, 0, result + 90, R);
+		getarccoords(&h);
+		d1.x = h.xend;
+		d1.y = h.yend;
+		arc(d.x, d.y, result + 90, result + 90 + 180, R);
+		getarccoords(&h);
+		d2.x = h.xend;
+		d2.y = h.yend;
+		arc(d.x, d.y, result, 180 + result, R);
+		getarccoords(&h);
+		d3.x = h.xend;
+		d3.y = h.yend;
+	}
+	else if (cuoi.x < dau.x && cuoi.y < dau.y){
+		param = 1.0*(cuoi.y - dau.y) / (cuoi.x - dau.x);
+		result = atan(param) * 180 / PI;
+		arc(d.x, d.y, 0, 90 - result, R);
+		getarccoords(&h);
+		d1.x = h.xend;
+		d1.y = h.yend;
+		arc(d.x, d.y, 90 - result, 90 - result + 180, R);
+		getarccoords(&h);
+		d2.x = h.xend;
+		d2.y = h.yend;
+		arc(d.x, d.y, 0, 180 - result, R);
+		getarccoords(&h);
+		d3.x = h.xend;
+		d3.y = h.yend;
+	}
+	else if (cuoi.x > dau.x && cuoi.y > dau.y){
+		param = 1.0*(cuoi.y - dau.y) / (cuoi.x - dau.x);
+		result = atan(param) * 180 / PI;
+		arc(d.x, d.y, 0, 90 - result, R);
+		getarccoords(&h);
+		d1.x = h.xend;
+		d1.y = h.yend;
+		arc(d.x, d.y, 90 - result, 90 - result + 180, R);
+		getarccoords(&h);
+		d2.x = h.xend;
+		d2.y = h.yend;
+		arc(d.x, d.y, -result, 0, R);
+		getarccoords(&h);
+		d3.x = h.xstart;
+		d3.y = h.ystart;
+	}
+	else if (dau.y == cuoi.y){
+		arc(d.x, d.y, 0, 90, R);
+		getarccoords(&h);
+		d1.x = h.xend;
+		d1.y = h.yend;
+		arc(d.x, d.y, 90, 90 + 180, R);
+		getarccoords(&h);
+		d2.x = h.xend;
+		d2.y = h.yend;
+		if (dau.x < cuoi.x){
+			arc(d.x, d.y, 0, 0, R);
+			getarccoords(&h);
+			d3.x = h.xstart;
+			d3.y = h.ystart;
+		}
+		else{
+			arc(d.x, d.y, 0, 180, R);
+			getarccoords(&h);
+			d3.x = h.xend;
+			d3.y = h.yend;
+		}
+	}
+	else{
+		arc(d.x, d.y, 0, 180, R);
+		getarccoords(&h);
+		d1.x = h.xend;
+		d1.y = h.yend;
+		d2.x = h.xstart;
+		d2.y = h.ystart;
+		if (cuoi.y > dau.y){
+			arc(d.x, d.y, 0, 270, R);
+			getarccoords(&h);
+			d3.x = h.xend;
+			d3.y = h.yend;
+		}
+		else{
+			arc(d.x, d.y, 0, 90, R);
+			getarccoords(&h);
+			d3.x = h.xend;
+			d3.y = h.yend;
+		}
+	}
+	setcolor(color);
+	setfillstyle(SOLID_FILL, color);
+	int a[] = { d3.x, d3.y, d1.x, d1.y, d2.x, d2.y, d3.x, d3.y };
+	fillpoly(4, a);
+	setcolor(1);
+}
+
+	int StringToInt(string a)
+{
+	int tong = 0;
+	for (int i = 0; i < a.length(); i++)
+	{
+		tong *= 10;
+		tong += (a[i] - '0');
+	}
+	return tong;
+}
+
+	string IntToString(int a)
+{
+	/*string kq;
+	int chia = 100;
+	while (chia != 0)
+	{
+		kq += a / chia + '0';
+		a %= chia;
+		chia /= 10;
+	}*/
+	std::stringstream ss;
+	ss<<a;
+	std::string kq = ss.str();
+	return kq;
+}
+
+	int NhapTrongSo()
+{
+	
+	HuongDan();
+	int kq;
+	char c;
+	string s;
+	outtextxy(370, 520, "Nhap toi da 3 chu so, nhan ENTER de ket thuc");
+	outtextxy(370, 540,"Nhap trong so: ");
+	outtextxy(370, 560, "Trong so thuoc 001 den 999");
+	outtextxy(370, 580, "Nhap trong so bang 0 neu muon xoa canh");
+	outtextxy(495, 540, &s[0]);
+	int i = 0;
+	do{
+		fflush(stdin);
+		while (!kbhit());
+		c = getch();
+		if (c != 13 && c != 8 && i < 3 && toupper(c) >= '0' && toupper(c) <= '9'){
+			i++;
+			s += c;
+		}
+		else if (c == 8 && i > 0){
+			i--;
+			s = xoaKiTu(s);
+		}
+		HuongDan();
+		outtextxy(370, 520, "Nhap toi da 3 chu so, nhan ENTER de ket thuc");
+		outtextxy(370, 540, "Nhap trong so: ");
+		outtextxy(370, 560, "Trong so thuoc 001 den 999");
+		outtextxy(370, 580, "Nhap trong so bang 0 neu muon xoa canh");
+		outtextxy(495, 540, &s[0]);
+	} while (c != 13 || i == 0);
+	kq = StringToInt(s);
+	return kq;
+}
+
+	void VeTrongSo(int dau, int cuoi)
+{
+	char *temp = new char[3];
+	int x,y;
+	x = ((dothi[dau].x + dothi[cuoi].x) / 2);
+	y = ((dothi[dau].y + dothi[cuoi].y) / 2);
+	string c = IntToString(G[dau][cuoi]);
+	int i = 0;
+	for (; i < c.length(); i++)
+	{
+		temp[i] = c[i];
+	}
+	temp[i] = '\0';
+	outtextxy(x + 10, y - 10, temp);
+}
+
+	void TaoCanh()
+	{
+		clearmouse();
+		HuongDan();
+		int trongso;
+		if (n <= 1)
+		{
+			outtextxy(370, 520, "Ban khong the tao canh do so luong dinh chua du");
+			
+			return;
+		}
+		HuongDan();
+		outtextxy(370, 520, "Click vao dinh dau");
+		int x, y;
+		int temp1, temp2;
+		while (true)
+	{
+		delay(.001);
+		if (ismouseclick(WM_LBUTTONDOWN))
+		{
+			getmouseclick(WM_LBUTTONDOWN, x, y);
+			break;
+		}
+	}
+
+
+
+	while (!IsDinh(x, y) && x != -1 && y != -1)
+	{
+		while (true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN, x, y);
+				break;
+			}
+		}
+	
+	}
+	for (int i=0;i<n;i++)
+				{
+					if(IsDinh1(x,y,dothi[i]))
+					{
+						DoiMauDinh(i,2);
+						temp1=i;
+						break;
+					}
+				}
+		clearmouse();
+		HuongDan();
+		outtextxy(370, 520, "Click vao dinh cuoi");
+		while (true)
+	{
+		delay(.001);
+		if (ismouseclick(WM_LBUTTONDOWN))
+		{
+			getmouseclick(WM_LBUTTONDOWN, x, y);
+			break;
+		}
+	}
+
+	while (!IsDinh(x, y) || IsDinh1(x, y, dothi[temp1]))
+	{
+		while (true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN, x, y);
+				break;
+			}
+		}
+
+	}
+	for (int i=0;i<n;i++)
+				{
+					if(IsDinh1(x,y,dothi[i]) && !IsDinh1(x,y,dothi[temp1]))
+					{
+						DoiMauDinh(i,2);
+						temp2=i;
+						break;
+					}
+				}
+		
+		VeMuiTen(dothi[temp1],dothi[temp2],15);
+		VeDinh1(dothi[temp1]);
+		VeDinh1(dothi[temp2]);
+		trongso=NhapTrongSo();
+		if (trongso==0)
+		{
+			G[temp1][temp2]=0;
+		}
+		else G[temp1][temp2]=trongso;
+		VeTrongSo(temp1,temp2);
+		
+		
+		ReInitCanh();
+		clearmouse();
+		ResetDoThi();
+	}	
+	
+	void ResetCanh()
+	{
+		dinh tempdau,tempcuoi;
+		tempdau.name= new char [3];
+		tempcuoi.name- new char [3];
+		int dem=-1;
+		int x,y;
+		string trongso;
+		for (int i=0;i<n;i++)
+		{    // for (int j=0;j<i;j++)
+			for (int j=0;j<n;j++)
+			{
+				if (G[i][j]!=0)
+					{
+						VeCanh(i,j,15);
+						trongso = IntToString(G[i][j]);
+						if (canh[i][j]==0)
+						{
+						x = ((dothi[i].x+dothi[j].x) / 2);
+						y = ((dothi[i].y+dothi[j].y) / 2);
+						}
+						else if (canh[i][j]==1)
+						{
+							x=(((dothi[i].x+10)+(dothi[j].x+10))/2);
+							y=(((dothi[i].y+10)+(dothi[j].y+10))/2);
+						}
+						else
+						{
+							x=(((dothi[i].x-10)+(dothi[j].x-10))/2);
+							y=(((dothi[i].y-10)+(dothi[j].y-10))/2);
+						}
+						VeDinh1(dothi[i]);
+						VeDinh1(dothi[j]);
+						outtextxy(x + 10, y + 10, &trongso[0]);
+					}
+			}
+		}
+		MTTS();
+		note();
+	}
