@@ -469,3 +469,191 @@ void DoiMauButton(dinh a)
 		}
 	}
 
+
+	void DFS()
+	{
+	
+		// Chon dinh
+		Init();
+		HuongDan();
+		outtextxy(370, 520, "Nhap vao dinh xuat phat: ");
+		int x,y,vt;
+		while(true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			}
+			if (IsDinh(x,y))
+			{
+				break;
+			}
+		}
+		
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				vt=i;
+				DoiMauDinh(i,2);
+				break;
+			}
+		}
+		
+		//DFS
+		int kq[MAX];
+		int sl=0;
+		int xx=370;
+		dfs(vt,kq,sl);
+		HuongDan();
+		
+		int t;
+		for (int i=0;i<sl;i++)
+		{
+			t=kq[i];
+			if (i!=sl-1)
+			{
+				outtextxy(xx,520,dothi[t].name);
+				xx=xx+20;
+				outtextxy(xx,520,"=>");
+				xx=xx+20;
+			}
+			else outtextxy(xx,520,dothi[t].name);
+		}
+		Draw(kq,sl,2,500);	
+		
+		
+		
+		setcolor(15);
+		
+		
+		outtextxy(370, 540, "Press any key to exit...");
+		getch();
+		HuongDan();
+		ResetDoThi();
+		return;
+	}
+
+	void dfs(int vt,int a[], int &sl)
+	{
+		int stack[MAX];
+		int sp=1;
+		int temp;
+		stack[sp]=vt;
+	
+		a[sl]=vt;
+		sl++;
+		chuaxet[vt]=false;
+		while (sp>0)
+		{
+			temp=stack[sp];
+			sp--;
+			for (int i=0;i<n;i++)
+			{
+				if ((G1[temp][i]!=MAXX) && (chuaxet[i]==true))
+				{
+					
+					a[sl]=i;
+					sl++;
+					stack[++sp]=temp;
+					stack[++sp]=i;
+					chuaxet[i]=false;
+					break;
+				}
+			}
+		}	
+	}
+	
+	void BFS()
+	{
+		
+	
+		// Chon dinh
+		HuongDan();
+		outtextxy(370, 520, "Nhap vao dinh xuat phat: ");
+		int x,y,u;
+		while(true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			}
+			if (IsDinh(x,y))
+			{
+				break;
+			}
+		}
+		
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				u=i;
+				DoiMauDinh(i,2);
+				break;
+			}
+		}
+		
+		//BFS
+		int kq[MAX];
+		int sl=0;
+		bfs(u,kq,sl);
+		int xx=370;	
+		int t;
+		HuongDan();
+		
+		for (int i=0;i<sl;i++)
+		{
+			t=kq[i];
+			if (i!=sl-1)
+			{
+				outtextxy(xx,520,dothi[t].name);
+				xx=xx+20;
+				outtextxy(xx,520,"=>");
+				xx=xx+20;
+			}
+			else outtextxy(xx,520,dothi[t].name);
+		}
+		Draw(kq,sl,2,500);
+  	
+		
+		setcolor(15);
+		outtextxy(370, 540, "Press any key to exit...");
+		getch();
+		HuongDan();
+		ResetDoThi();
+
+	}
+	
+	void bfs (int vt, int a[], int &sl)
+	{
+		Init();
+		int queue[MAX*MAX];
+		int high =1;
+		int low =1;
+		int t;
+		queue[low]=vt;
+		chuaxet[vt]=false;
+		while (low<=high)
+		{
+			
+			t=queue[low];
+			low ++;
+			a[sl]=t;
+			sl++;
+			for (int i=0;i<n;i++)
+			{
+				if (G1[t][i]!=MAXX && chuaxet[i]==true)
+				{	
+					high++;
+					queue[high]=i;
+				
+					chuaxet[i]=false;
+				}
+			}
+		}
+	}
+	
+
