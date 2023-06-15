@@ -656,4 +656,149 @@ void DoiMauButton(dinh a)
 		}
 	}
 	
+	
+	void InitG()
+	{
+		for (int i=0;i<MAX;i++)
+		{
+			for(int j=0;j<MAX;j++)
+			{
+				G[i][j]=0;
+			}
+			
+		}
+	}
+	
+	void XtoY()
+	{
+		
+			int x,y;
+		int dau,cuoi;
+		HuongDan();
+		outtextxy(370,520,"Nhap vao dinh bat dau: ");
+		while (1)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			if (IsDinh(x,y))
+				break;
+		}
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				dau=i;
+				DoiMauDinh(i,2);
+				break;
+			}
+		}
+		
+		HuongDan();
+		outtextxy(370,520,"Nhap vao dinh ket thuc: ");
+		while (1)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			if (IsDinh(x,y) && !IsDinh1(x,y,dothi[dau]))
+				break;
+		}
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				cuoi=i;
+				DoiMauDinh(i,2);
+				break;
+			}
+		}
+		
+		Init();
+		int truoc[MAX];
+		int d[MAX];
+		for (int i=0;i<n;i++)
+		{
+			truoc[i]=dau;
+			d[i]=G1[dau][i];
+		}
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				if ((G1[i][j]!=MAXX) && (d[j]>d[i]+G1[i][j]))
+				{
+					d[j]=d[i]+G1[i][j];
+					truoc[j]=i;
+				}
+			}
+		}
+		if (d[cuoi]==MAXX)
+		{
+			outtextxy(370,540,"KHONG CO DUONG DI");
+		}
+		else
+		{
+		int kq[MAX];
+		int sl=0;
+		int temp;
+		kq[sl]=cuoi;
+		sl++;
+		temp=truoc[cuoi];
+		while (temp!=dau)
+		{
+			kq[sl]=temp;
+			sl++;
+			temp=truoc[temp];
+		}
+		kq[sl]=dau;
+		
+		sl++;
+		
+		HuongDan();
+			int xx=370;
+		for (int i=sl-1;i>=0;i--)
+		{
+			if (i!=0)
+			{
+				outtextxy(xx,520,dothi[kq[i]].name);
+				xx=xx+20;
+				outtextxy(xx,520,"=>");
+				xx=xx+20;
+			}
+			else outtextxy(xx,520,dothi[kq[i]].name);
+		}
+		int kq1[sl];
+		for (int i=0;i<sl;i++)
+		{
+			kq1[i]=kq[sl-1-i];
+		};
+		string s;
+		s=IntToString(d[cuoi]);
+		outtextxy(370,540,"Do dai duong di: ");
+		outtextxy(500,540,&s[0]);
+		Draw(kq1,sl,14,500);
+		}
+		outtextxy(370,560,"Press any key...");
+		
+		
+		getch();
+		HuongDan();
+		ResetDoThi();
+	}
 
+
+	void ResetDoThi()
+{
+	DoThi();
+	HuongDan();
+	VeDinh();
+	ResetCanh();
+	
+}
+	void ResetDinh()
+	{
+	DoThi();
+	HuongDan();
+	VeDinh();
+	}
