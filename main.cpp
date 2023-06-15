@@ -802,3 +802,81 @@ void DoiMauButton(dinh a)
 	HuongDan();
 	VeDinh();
 	}
+	
+		void DinhThat()
+	{
+		int x,y;
+		int dau,cuoi;
+		HuongDan();
+		outtextxy(370,520,"Nhap vao dinh bat dau: ");
+		while (1)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			if (IsDinh(x,y))
+				break;
+		}
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				dau=i;
+				DoiMauDinh(i,1);
+				break;
+			}
+		}
+		
+		HuongDan();
+		outtextxy(370,520,"Nhap vao dinh ket thuc: ");
+		while (1)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			if (IsDinh(x,y) && !IsDinh1(x,y,dothi[dau]))
+				break;
+		}
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				cuoi=i;
+				DoiMauDinh(i,1);
+				break;
+			}
+		}
+		HuongDan();
+		Init();
+		
+		for (int i=0;i<n;i++)
+			truoc[i]=999;
+		for (int i=0;i<n;i++)
+		{
+			HuongDan();
+			dfs1(dau);
+			Result1(dau,cuoi);
+			Init2();
+		}
+		
+		
+		getch();
+		ResetDoThi();
+	}
+		void dfs1(int v)
+	{
+		chuaxet[v]=false;
+		for (int i=0;i<n;i++)
+		{
+			if (G1[v][i]!=MAXX)
+			{
+				if (chuaxet[i]==true)
+				{
+					truoc[i]=v;
+					G1[v][i]==MAXX;
+					dfs1(i);
+				}
+			}
+		}
+	}
+	
