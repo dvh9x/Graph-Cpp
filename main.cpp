@@ -1417,3 +1417,192 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		MTTS();
 		note();
 	}
+	
+		
+	void DocFile()
+	{
+		HuongDan();
+		char c;
+		string tenfile;
+		char* kq = new char[20];
+		string s;
+		outtextxy(370, 520, "Nhap toi da 20 chu, khong can ghi duoi mo rong cua file. Nhan ENTER de ket thuc");
+		outtextxy(370, 540, "Ten file: ");
+		outtextxy(495, 540, &s[0]);
+		int i = 0;
+		do
+		{
+			fflush(stdin);
+			while (!kbhit());
+			c = getch();
+			if (c != 13 && c != 8 && i < 20 && ((c>=65 && c<=90) ||(c>=97 && c<=122) || (c>=48 && c<=57) ))
+			{
+				i++;
+				s += c;
+			}
+			else if (c == 8 && i > 0){
+				i--;
+				s = xoaKiTu(s);
+			}
+			kq = StringToChar(s);
+			HuongDan();
+			outtextxy(370, 520, "Nhap toi da 3 chu, nhan ENTER de ket thuc");
+			outtextxy(370, 540, "Ten dinh: ");
+			outtextxy(495, 540, &s[0]);
+			if (n-1 >19 )
+			{
+				for (int j = 0; j < n-1; j++)
+				{
+					if (strcmp(kq, dothi[j].name) == 0)
+					{
+						do
+						{
+							fflush(stdin);
+						} 
+						while (!kbhit());
+						c = getch();
+						if (c != 13 && c != 8 && i < 3 && c >= 65 && c <= 90)
+						{
+							i++;
+							s += c;
+						}
+						else if (c == 8 && i > 0){
+							i--;
+							s = xoaKiTu(s);
+						}
+						kq = StringToChar(s);
+
+					}
+				}
+			}
+			HuongDan();
+			outtextxy(370, 520, "Nhap toi da 20 chu, khong can ghi duoi mo rong cua file. Nhan ENTER de ket thuc");
+			outtextxy(370, 540, "Nhap ten file: ");
+			outtextxy(495, 540, &s[0]);
+		} while (c != 13 || i == 0);
+		tenfile=s;
+		ofstream f;
+		
+		tenfile += ".txt";
+		f.open(&tenfile[0]);
+		
+		f<<n<<endl;
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+					f<<G[i][j]<<" ";
+			}
+			f<<endl;
+		}
+		for (int i=0;i<n;i++)
+		{
+			f<<dothi[i].x<<" "<<dothi[i].y<<" "<<dothi[i].name<<endl;
+		}
+		outtextxy(370, 560, "LUU FILE HOAN TAT !!!");
+		f.close();	
+		outtextxy(370,580,"Press any key...");
+		getch();
+		HuongDan();
+	}
+	
+	void OpenFile()
+	{
+		
+		HuongDan();
+		char c;
+		string tenfile;
+		char* kq = new char[20];
+		string s;
+		outtextxy(370, 520, "Nhap toi da 20 chu, khong can ghi duoi mo rong cua file. Nhan ENTER de ket thuc");
+		outtextxy(370, 540, "Ten file: ");
+		outtextxy(495, 540, &s[0]);
+		int i = 0;
+		do
+		{
+			fflush(stdin);
+			while (!kbhit());
+			c = getch();
+			if (c != 13 && c != 8 && i < 20 && ((c>=65 && c<=90) ||(c>=97 && c<=122) || (c>=48 && c<=57) ))
+			{
+				i++;
+				s += c;
+			}
+			else if (c == 8 && i > 0){
+				i--;
+				s = xoaKiTu(s);
+			}
+			kq = StringToChar(s);
+			HuongDan();
+			outtextxy(370, 520, "Nhap toi da 20 chu, khong can ghi duoi mo rong cua file. Nhan ENTER de ket thuc");
+			outtextxy(370, 540, "Ten file: ");
+			outtextxy(495, 540, &s[0]);
+			if (n-1 >19 )
+			{
+				for (int j = 0; j < n-1; j++)
+				{
+					if (strcmp(kq, dothi[j].name) == 0)
+					{
+						do
+						{
+							fflush(stdin);
+						} 
+						while (!kbhit());
+						c = getch();
+						if (c != 13 && c != 8 && i < 3 && c >= 65 && c <= 90)
+						{
+							i++;
+							s += c;
+						}
+						else if (c == 8 && i > 0){
+							i--;
+							s = xoaKiTu(s);
+						}
+						kq = StringToChar(s);
+
+					}
+				}
+			}
+			HuongDan();
+			outtextxy(370, 520, "Nhap toi da 20 chu, khong can ghi duoi mo rong cua file. Nhan ENTER de ket thuc");
+			outtextxy(370, 540, "Nhap ten file: ");
+			outtextxy(495, 540, &s[0]);
+		} while (c != 13 || i == 0);
+		tenfile=s;
+		
+		tenfile+=".txt";
+		
+		ifstream f;
+		f.open(&tenfile[0]);
+		if (f.fail())
+		{
+			HuongDan();
+			outtextxy(370, 520, "File khong ton tai");
+			return;
+		}
+		else name=strupr(&tenfile[0]);
+		f>>n;
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				f>>G[i][j];
+				if (G[i][j]==0)
+				{
+					G[i][j]=NULL;
+				}
+			}
+		}
+		for (int i=0;i<n;i++)
+		{
+			dothi[i].name = new char[3];
+			f>>dothi[i].x;
+			f>>dothi[i].y;
+			f>>dothi[i].name;
+		}
+			outtextxy(370, 560, "DOC FILE HOAN TAT !!!");
+		f.close();
+		ReInitCanh();
+		ResetDoThi();
+	}
+	
