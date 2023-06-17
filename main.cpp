@@ -1606,3 +1606,195 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		ResetDoThi();
 	}
 	
+	
+	void DinhCopy(dinh &a, dinh &b)
+	{
+		a.x=b.x;
+		a.y=b.y;
+		strcpy(a.name,b.name);
+	}
+
+	void XoaDinh()
+	{
+		int x,y,vt;
+		outtextxy(370, 520, "Nhap vao dinh can xoa");
+	
+		//Nhan Click dinh
+		while (true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			}
+			if (IsDinh(x,y))
+			{
+				break;
+			}
+		}
+		
+		//Tim vi tri dinh duoc click
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				vt=i;
+				break;
+			}
+		}
+		
+		//Xoa dinh
+			//Vi tri cuoi
+		if (vt==n-1)
+		{
+			dothi[n-1].x=NULL;
+			dothi[n-1].y=NULL;
+			dothi[n-1].name=NULL;
+		}
+			//Vi tri bat ki
+		else
+		{
+			for (int i=vt;i<n-1;i++)
+			{
+				DinhCopy(dothi[i],dothi[i+1]);
+			}
+		}
+		dothi[n-1].x=NULL;
+		dothi[n-1].y=NULL;
+		dothi[n-1].name=NULL;
+		//Xoa canh	
+			//Vi tri dau
+		if(vt==n-1)
+		{
+			for (int i=0;i<n;i++)
+			{
+				G[i][n-1]=0;
+				G[n-1][i]=0;
+			}
+			
+		}
+			//Vi tri bat ki
+		else
+		{
+			for (int i=0;i<n;i++)
+			{
+				for (int j=vt;j<n-1;j++)
+				{
+					G[i][j]=G[i][j+1];
+				}
+				G[i][n-1]=0;
+			}
+			
+			for(int j=0;j<n;j++)
+			{
+				for(int i=vt;i<n-1;i++)
+				{
+					G[i][j]=G[i+1][j];
+				}
+				G[n-1][j]=0;
+			}
+			
+		}
+		n--;
+		ReInitCanh();
+		ResetDoThi();
+		
+	}
+	
+	void MoveDinh()
+	{
+		int x,y,vt;
+	
+		outtextxy(370, 520, "Nhap vao dinh can di chuyen");
+		while (true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			}
+			if (IsDinh(x,y))
+			break;
+		
+		}
+		
+		//Tim vi tri dinh duoc click
+		for (int t=0;t<n;t++)
+		{
+			if (IsDinh1(x,y,dothi[t]))
+			{
+				vt=t;
+				DoiMauDinh(t,2);
+				break;
+			}
+		}
+		HuongDan();
+		outtextxy(370, 520, "Nhap vao noi den");
+		while(true)
+		{
+			delay(.001);
+			if(ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			}
+			if(x >= (465+BK) && x <= (1250-BK) && y >= (30+BK) && y <= (480-BK) && x!=-1 && y!=-1 && !IsDinh(x,y))
+			{
+				dothi[vt].x=x;
+				dothi[vt].y=y;
+				break;
+			}
+		}
+		ResetDoThi();
+	}
+	
+	void DoiTenDinh()
+	{
+	int x,y,vt;
+		outtextxy(370, 520, "Nhap vao dinh can doi ten");
+		outtextxy(370, 540, "Ten dinh phai khac voi cac dinh khac");
+		while (true)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			}
+			if (IsDinh(x,y))
+			{
+				break;
+			}
+		}
+		
+		//Tim vi tri dinh duoc click
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				vt=i;
+				break;
+			}
+		}
+		//Nhap ten moi
+		char* c= new char[3];
+		c = TenDinh();
+		c = strupr(c);
+		if (n > 1)
+		{
+			ad:
+			for (int i = 0; i < n; i++)
+			{
+				while (strcmp(c, dothi[i].name) == 0)
+				{
+					c = TenDinh();
+					c = strupr(c);
+					goto ad;
+				}
+			}
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			dothi[vt].name[i] = c[i];
+		}
+		ResetDoThi();	
+	}
+
