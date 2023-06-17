@@ -1797,4 +1797,14 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		}
 		ResetDoThi();	
 	}
-
+	void DoiMauDinh(int vt, int mau)
+	{
+	setfillstyle(1, mau);
+	setcolor(mau);
+	pieslice(dothi[vt].x, dothi[vt].y, 0, 0, BK);
+	setcolor(15);	
+	outtextxy(dothi[vt].x - 9, dothi[vt].y - 9, dothi[vt].name);
+	setcolor(mau-1);
+	circle(dothi[vt].x,dothi[vt].y,BK);
+	setcolor(15);
+	}
