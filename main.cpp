@@ -1808,3 +1808,114 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 	circle(dothi[vt].x,dothi[vt].y,BK);
 	setcolor(15);
 	}
+	
+		void Euler()
+	{
+		Init();
+		HuongDan();
+		int a[MAX*MAX];
+		int sl=0;
+		string thongbao="";
+		int dem1, dem2;
+		bool euler =true;
+		dfs(0,a,sl);
+		if (sl!=(n))
+		{
+			outtextxy(370,520,"KHONG CO CHU TRINH EULER!");
+		}
+		else 
+		{
+			for (int i=0;i<n;i++)
+			{
+				dem1=0;
+				dem2=0;
+				for (int j=0;j<n;j++)
+				{
+					if (G1[i][j]!=MAXX)
+						dem1++;
+					if (G1[j][i]!=MAXX)
+						dem2++;
+				}
+				if (dem1!=dem2)
+				{
+					outtextxy(370,520,"KHONG CO CHU TRINH EULER!");
+					euler=false;
+					break;
+					
+				}
+			}
+			if (euler==true)
+			{
+				EulerCycle(0,a,sl);
+				for (int i=0;i<sl-1;i++)
+				{
+					thongbao=thongbao+dothi[a[i]].name+">";
+				}
+				thongbao=thongbao+dothi[a[sl-1]].name;
+			
+				outtextxy(370,520,"Chu trinh Euler: ");
+				outtextxy(370,540,&thongbao[0]);
+				
+			//	Draw(a,sl,14,500);
+				int truoc=a[0];
+				for (int i=0;i<sl;i++)
+				{
+					delay(500);
+					DoiMauDinh(a[i],14);
+					VeCanh(truoc,a[i],13);
+					DoiMauDinh(truoc,14);
+					DoiMauDinh(a[i],14);	
+					truoc=a[i];
+				}
+				outtextxy(370,560,"Press any key...");
+				getch();
+				HuongDan();
+				ResetDoThi();
+			}
+		}
+	}
+	
+	void EulerCycle(int vt,int kq[], int &sl)
+	{
+		Init();
+		int stack[MAX*MAX];
+		int CE[MAX*MAX];
+		int p=0;
+		int sp=1;
+		int s;
+		int t;
+		bool ke=false;
+		stack[sp]=vt;
+		while (sp!=0)
+		{
+			ke=false;
+			s=stack[sp];
+			for (int i=0;i<n;i++)
+			{
+				if (G1[s][i]!=MAXX)
+				{
+					sp++;
+					stack[sp]=i;
+					G1[s][i]=MAXX;
+					ke = true;
+					break;
+				}
+			}
+			if (!ke)
+			{
+				sp--;
+				CE[p]=s;
+				p++;
+			}
+			
+		}
+	
+		
+		
+		sl=p;
+		for (int i=0;i<p;i++)
+		{
+			kq[i]=CE[p-1-i];
+		}
+	}
+
