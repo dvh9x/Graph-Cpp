@@ -1919,3 +1919,92 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		}
 	}
 
+	
+	void TopoSort()
+	{
+		int S[MAX*MAX];
+		int low =1;
+		int high=1;
+		int L[MAX];
+		int Lp=-1;
+		int dem;
+		int temp;
+		Init();
+		HuongDan();
+		for (int i=0;i<n;i++)
+		{
+			dem=0;
+			for (int j=0;j<n;j++)
+			{
+				if (G1[j][i]!=MAXX)
+					dem++;
+			}
+			if (dem==0)
+			{
+				cout<<dothi[i].name<<" ";
+				S[high]=i;
+				high++;
+				chuaxet[i]=false;
+			}
+		}
+		high--;
+		while (low<=high)
+		{
+			Lp++;
+			L[Lp]=S[low];
+			temp=S[low];
+			low++;
+			
+			for (int i=0;i<n;i++)
+			{
+				if (G1[temp][i]!=MAXX)
+					G1[temp][i]=MAXX;
+					
+				dem=0;
+				for (int j=0;j<n;j++)
+				{
+					if (G1[j][i]!=MAXX)
+					{
+						dem++;
+					}
+				}
+				if (dem==0 && chuaxet[i]==true)
+				{
+					high++;
+					S[high]=i;
+					chuaxet[i]=false;
+				}
+			}
+		}
+		string s="Ket Qua: ";
+		bool isdone=true;
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				if (G1[i][j]!=MAXX)
+				{
+					isdone=false;
+					break;
+				}
+			}
+			if (isdone==false)
+				break;
+		}
+		if (isdone == false)
+			outtextxy(370,520,"Khong du dieu kien");
+		else
+		{
+			for (int i=0;i<=Lp;i++)
+			{
+				delay(500);
+				s=s+" "+dothi[L[i]].name;
+				outtextxy(370,520,&s[0]);
+				DoiMauDinh(L[i],2);
+			}
+		}
+		outtextxy(370,540,"Press any key...");
+		getch();
+		ResetDoThi();
+	}
+
