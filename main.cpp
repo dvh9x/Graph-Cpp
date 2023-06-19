@@ -2008,3 +2008,46 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		ResetDoThi();
 	}
 
+	void InitCanh()
+	{
+		for (int i=0;i<MAX;i++)
+		{
+			for (int j=0;j<MAX;j++)
+			{
+				xetcanh[i][j]=false;
+				canh[i][j]=0;
+			}
+		}
+	}
+	
+	void ReInitCanh()
+	{
+		InitCanh();
+		
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				if (xetcanh[i][j]==false)
+				{
+					if (G[i][j]!=0 && xetcanh[i][j]==false)
+					{
+						if (G[j][i]==0)
+						{
+							canh[i][j]=0;
+						}
+						else if (xetcanh[j][i]==false)
+							{
+								canh[i][j]=1;
+								canh[j][i]=-1;
+								xetcanh[j][i]=true;
+							}
+							else canh[i][j]=-1;
+						
+				}
+				}
+				xetcanh[i][j]=true;
+			}
+		}
+	}
+	
