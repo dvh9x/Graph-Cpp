@@ -2051,3 +2051,56 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		}
 	}
 	
+		
+	void Hamilton()
+	{
+		HuongDan();
+		int x,y;
+		int vt;
+		HuongDan();
+		outtextxy(370,520,"Nhap vao dinh bat dau: ");
+		while (1)
+		{
+			delay(.001);
+			if (ismouseclick(WM_LBUTTONDOWN))
+				getmouseclick(WM_LBUTTONDOWN,x,y);
+			if (IsDinh(x,y))
+				break;
+		}
+		for (int i=0;i<n;i++)
+		{
+			if (IsDinh1(x,y,dothi[i]))
+			{
+				vt=i+1;
+				DoiMauDinh(i,1);
+				break;
+			}
+		}
+		B[0]=vt;
+		i=1;
+		d=0;
+		
+		Init1();
+		HuongDan();
+		HamiltonCycle(B,C,i);
+		if (d==0)
+			outtextxy(370,520,"KHONG CO CHU TRINH HAMILTON");
+		outtextxy(370,540,"Press any key...");
+		getch();
+		ResetDoThi();		
+	}
+	
+	void HamiltonCycle(int *B, int *C, int i)
+	{
+		int j, k;
+  		for(j=1; j<=n; j++){
+    	if(G2[B[i-1]][j]==1 && C[j]==0){
+     	 B[i]=j; C[j]=1;
+     	 if(i<n) HamiltonCycle(B, C, i+1);
+      	else if(B[i]==B[0]) Result();
+     	 C[j]=0;
+    }
+  }
+	}
+	
+
