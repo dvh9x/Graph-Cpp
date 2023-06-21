@@ -2104,3 +2104,94 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 	}
 	
 
+	void TPLT()
+	{
+		HuongDan();
+		int kq[MAX*MAX];
+		int sl=0;
+		
+		if(IsVoHuong()==false)
+		{
+			Init();
+			bool IsLT=true;
+			for (int i=0;i<n;i++)
+			{
+				dfs(i,kq,sl);
+				if (sl!=n)
+				{
+					IsLT=false;
+					break;
+				}
+			}
+			if (IsLT==true)
+				outtextxy(370,520,"DO THI LIEN THONG MANH");
+			else outtextxy(370,520,"DO THI LIEN THONG YEU");
+			
+		}
+		else 
+		{
+			outtextxy(700,520,"CAC THANH PHAN LIEN THONG CUA DO THI:");
+		Init();
+	
+		int yy=540;
+		int xx=370;
+		int dem=1;
+		
+		int color=2;
+		dfs(0,kq,sl);
+		string s="";
+		string temp="";
+		for (int i=0;i<sl;i++)
+		{
+			s=s+" "+dothi[kq[i]].name;
+		}
+		temp="TPLT "+ IntToString(dem)+": ";
+		outtextxy(xx,yy,&temp[0]);
+		outtextxy(xx+60,yy,&s[0]);
+		yy=yy+20;
+		Draw(kq,sl,color,400);
+		for (int i=0;i<n;i++)
+		{
+			if (chuaxet[i]==true)
+			{
+				temp="";
+				if (color==15)
+					color=0;
+				else color++;
+				sl=0;
+				dfs(i,kq,sl);
+				dem++;
+				s="";
+				for (int i=0;i<sl;i++)
+				{
+					s=s+" "+dothi[kq[i]].name;
+				}
+				temp="TPLT "+ IntToString(dem)+": ";
+				outtextxy(xx,yy,&temp[0]);
+				outtextxy(xx+60,yy,&s[0]);
+				if (yy>640)
+				{
+					xx=xx+150;
+					yy=540;
+				}
+				else yy=yy+20;
+				Draw(kq,sl,color,500);
+			}
+		
+		}
+		}
+		
+		getch();
+		ResetDoThi();
+	}
+		int LienThong()
+	{
+		for (int i=0;i<n;i++)
+		{
+			if (chuaxet[i]==true)
+				return 1;
+			
+		}
+		return 0;
+	}
+	
