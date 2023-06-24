@@ -2417,6 +2417,123 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		}
 	}
 
+	
+	void Info()
+	{
+		HuongDan();
+		outtextxy(370, 520, "DO AN CAU TRUC DU LIEU & GIAI THUAT");
+		outtextxy(370, 540, "DE 7");
+	}
+	
+	void ClearDoThi()
+	{
+		for (int i=0;i<n;i++)
+		{
+			dothi[i].x=NULL;
+			dothi[i].y=NULL;
+			dothi[i].name=NULL;
+			for (int j=0;j<n;j++)
+			{
+				G[i][j]=NULL;
+			}
+		}
+		n=0;
+		name="";
+		ResetDoThi();
+		
+	}
 
+
+	
+	void Draw(int a[],int n1, int color,int speed)
+	{
+		int temp1,temp2,truoc;
+		bool q;
+		int t;
+		q = IsVoHuong();
+		truoc=a[0];
+		if (q==true)
+		{
+			for (int i=0;i<n1;i++)
+		{
+			
+			for (int j=0;j<n1;j++)
+			{
+				if (a[j]==truoc)
+					t=j;
+			}
+			delay(speed);
+			DoiMauDinh(a[i],color-1);
+			if (G[truoc][a[i]]!=0)
+			{
+				VeCanh(truoc,a[i],color);
+				VeCanh(a[i],truoc,color);
+				DoiMauDinh(truoc,color-1);
+				DoiMauDinh(a[i],color-1);
+			}
+			else
+			{
+				for (t;t>=0;t--)
+				{
+					if (G[a[t]][a[i]]!=0)
+					{
+						truoc=a[t];
+						break;
+					}
+					else truoc=a[i];
+				}
+				
+				VeCanh(truoc,a[i],color);
+				VeCanh(a[i],truoc,color);
+				DoiMauDinh(truoc,color-1);
+				DoiMauDinh(a[i],color-1);
+				
+			}
+			truoc=a[i];
+		}
+		}
+		else
+		{
+			for (int i=0;i<n1;i++)
+		{
+			
+			for (int j=0;j<n1;j++)
+			{
+				if (a[j]==truoc)
+					t=j;
+			}
+			delay(speed);
+			DoiMauDinh(a[i],color-1);
+			if (G[truoc][a[i]]!=0)
+			{
+				VeCanh(truoc,a[i],color);
+				DoiMauDinh(truoc,color-1);
+				DoiMauDinh(a[i],color-1);
+			}
+			else
+			{
+				for (t;t>=0;t--)
+				{
+					if (G[a[t]][a[i]]!=0)
+					{
+						truoc=a[t];
+						break;
+					}
+					else truoc=a[i];
+				}
+				
+				VeCanh(truoc,a[i],color);
+				
+				DoiMauDinh(truoc,color-1);
+				DoiMauDinh(a[i],color-1);
+				
+			}
+			truoc=a[i];
+		}
+		}
+	}
+	
+
+	
 	
 	
