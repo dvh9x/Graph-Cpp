@@ -2184,7 +2184,8 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		getch();
 		ResetDoThi();
 	}
-		int LienThong()
+	
+	int LienThong()
 	{
 		for (int i=0;i<n;i++)
 		{
@@ -2193,5 +2194,43 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 			
 		}
 		return 0;
+	}
+	
+	void VeCanh(int dau, int cuoi, int color)
+	{
+		dinh t1,t2;
+		t1.name=new char [3];
+		t2.name = new char [3];
+		if (canh[dau][cuoi]==0)
+			{
+				VeMuiTen(dothi[dau],dothi[cuoi],color);
+			
+			}
+		else if (canh[dau][cuoi]==1)
+			{
+				t1.x=dothi[dau].x;
+				t1.y=dothi[dau].y;
+				t2.x=dothi[cuoi].x;
+				t2.y=dothi[cuoi].y;
+				t1.x+=10;
+				t1.y+=10;
+				t2.x+=10;
+				t2.y+=10;
+				VeMuiTen(t1,t2,color);
+				
+			}
+			else 
+			{
+				t1.x=dothi[dau].x;
+				t1.y=dothi[dau].y;
+				t2.x=dothi[cuoi].x;
+				t2.y=dothi[cuoi].y;
+				t1.x-=10;
+				t1.y-=10;
+				t2.x-=10;
+				t2.y-=10;
+				VeMuiTen(t1,t2,color);
+				
+			}
 	}
 	
