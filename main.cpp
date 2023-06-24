@@ -2267,4 +2267,98 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		else return true;
 	}
 	
+	void DinhTru() 
+	{
+		if (IsVoHuong()==true)
+		{
+			int a[MAX];
+		int sl=0;
+		int xx=370;
+		int d=0;
+		HuongDan();
+		outtextxy(370,520,"Cac dinh tru: ");
+		Init();
+		for(int i=0;i<n;i++)
+		{	
+			chuaxet[i]=false;
+			if (i!=n-1)
+				dfs(i+1,a,sl);
+			else dfs(1,a,sl);
+			if(LienThong()==1)
+			{
+				d++;
+				outtextxy(xx,540,dothi[i].name);
+				DoiMauDinh(i,1);
+				xx=xx+20;
+			}
+			Init();
+		}
+		if (d==0)
+			outtextxy(370,540,"KHONG CO :)");
+		}
+		else outtextxy(370,540,"DAY KHONG PHAI DO THI VO HUONG");
+		outtextxy(370,560,"Press any key...");
+		getch();
+		HuongDan();
+		ResetDoThi();
+				
+	}
+	void CanhCau()
+	{
+		if(IsVoHuong()==true)
+		{
+			int a[MAX];
+		int sl=0;
+		int xx=370;
+		int yy=520;
+		int d=0;
+		Init();
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				if (G1[i][j]!=MAXX)
+				{
+					G1[i][j]=MAXX;
+					dfs(1,a,sl);
+					if(LienThong()==1)
+					{
+					VeCanh(i,j,4);
+					DoiMauDinh(i,5);
+					DoiMauDinh(j,5);
+					setcolor(15);
+					outtextxy(xx,yy,dothi[i].name);
+					outtextxy(xx+20,yy,"=>");
+					outtextxy(xx+40,yy,dothi[j].name);
+					if (yy>640)
+					{
+						xx=500;
+						yy=520;
+					}
+					else	yy=yy+20;
+					d++;
+					}
+				}
+				Init();
+			}
+		}
+		if (d==0)
+		{
+			outtextxy(370,520,"Khong co canh cau");
+			outtextxy(370,540,"Press any key...");
+		}
+		}
+		else
+		{
+			outtextxy(370,520,"DAY KHONG PHAI DO THI VO HUONG");
+			outtextxy(370,540,"Press any key...");
+			
+		}
+		
+		
+		getch();
+		HuongDan();
+		ResetDoThi();
+	}
+
 	
