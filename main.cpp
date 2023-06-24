@@ -2361,4 +2361,62 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		ResetDoThi();
 	}
 
+		void Result()
+	{
+		int i;
+		string s="";
+  		for(i=n; i>=0; i--)
+   		{
+   			delay(100);
+   		
+   			s=s+" "+dothi[B[i]-1].name;
+   			setcolor(15);
+   			outtextxy(370,520,&s[0]);
+   		
+   			DoiMauDinh(B[i]-1,2);
+   			if (i!=0)
+   			{
+   					VeCanh(B[i]-1,B[i-1]-1,3);
+   					DoiMauDinh(B[i]-1,2);
+   					DoiMauDinh(B[i-1]-1,2);
+   					
+			   }
+   			
+   			
+		}
+   		d++;
+   		outtextxy(370,540,"Press any key to continue...");
+   		getch();
+   		ResetDoThi();
+   	
+   	
+   		
+	}
+
+
+
+
+	void Result1(int dau, int cuoi)
+	{
+		HuongDan();
+		string s="";
+		if (truoc[cuoi]==999)
+		{
+			outtextxy(370,520,"Khong co dinh that");
+		}
+		else
+		{
+			int i=cuoi;
+			while(truoc[i]!=dau)
+			{
+				s=s+" "+dothi[truoc[i]].name;
+				outtextxy(370,520,&s[0]);
+				DoiMauDinh(truoc[i],2);
+				i=truoc[i];
+			}
+		}
+	}
+
+
+	
 	
