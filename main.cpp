@@ -2233,4 +2233,38 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 				
 			}
 	}
+
+	bool IsVoHuong()
+	{
+		bool cheo=true;
+		bool canh=true;
+		for (int i=0;i<n;i++)
+		{
+			for (int j=0;j<n;j++)
+			{
+				if (i==j)
+				{
+					if (G[i][j]!=0)
+					{
+						cheo=false;
+						break;
+					}
+				}
+				else 
+				{
+					if (G[i][j]!=G[j][i])
+					{
+						canh=false;
+						break;
+					}
+				}
+			}
+			if ((canh==false) || (cheo==false))
+				break;
+		}
+		if ((canh==false) || (cheo==false))
+			return false;
+		else return true;
+	}
+	
 	
