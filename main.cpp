@@ -104,6 +104,19 @@ bool IsVoHuong();
 
 int main()
 {
+		InitG();
+		dinh a[3][10];
+		
+		int x, y, c, d;
+		int i = 1;
+		
+		initwindow(1280,720);
+		SetGiaoDien(a);
+		
+		GetChuot(a,c,d);
+		closegraph();
+		
+		return 0;
 }
 
 void Button1(dinh a)
@@ -2533,7 +2546,229 @@ float KhoangCach(int x1, int y1, int x2, int y2)
 		}
 	}
 	
-
+	void Xuli(int stt)
+	{
+		switch (stt)
+		{
+		case 1:
+			if(n>0)
+			{
+				DFS();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 2:
+			if(n>0)
+			{
+				BFS();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 3:
+			if(n>0)
+			{
+				XtoY();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 4:
+			if(n>0)
+			{
+				DinhTru();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 5:
+			if(n>0)
+			{
+				DinhThat();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 6:
+			if(n>0)
+			{
+				CanhCau();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 7:
+			if(n>0)
+			{
+				Hamilton();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 8:
+			if(n>0)
+			{
+				Euler();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 9:
+			if(n>0)
+			{
+				TopoShort();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 10:
+			if(n>0)
+			{
+				TPLT();
+			}
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "KHONG DU DINH ");
+				break;
+			}
+			break;
+		case 11:
+			if (n!=0)
+			{
+				char a;
+			HuongDan();
+			outtextxy(370, 520, "Ban co that su muon Clear dothi? (Y/N)");
+			a= getch();
+			if (a ==89 || a==121)
+			{
+				ClearDoThi();
+				OpenFile();
+			}
+			else 
+			{
+				HuongDan();
+				break;
+			}
+			}
+			else OpenFile();
+			break;
+		case 12:
+			HuongDan();
+			DocFile();
+			break;
+		case 13:
+			if (n!=0)
+			{
+				char c;
+			HuongDan();
+			outtextxy(370, 520, "Ban co that su muon Clear dothi? (Y/N)");
+			c= getch();
+			if (c ==89 || c==121)
+			ClearDoThi();
+			else 
+			{
+				HuongDan();
+				break;
+			}
+			}
+			else outtextxy(370, 520, "CO GI DE CLEAR A?");
+			break;
+		case 14:
+			if (n<MAX)
+			{
+			HuongDan();
+			TaoDinh();
+			clearmouse();
+			}
+			else
+			{
+				HuongDan();
+				outtextxy(370, 520, "So luong dinh vuot qua so luong cho phep");
+				break;
+			}
+			break;
+		case 15:
+			TaoCanh();
+			clearmouse();
+			break;
+		case 16:
+			if (n!=NULL)
+			XoaDinh();
+			else 
+			{
+				HuongDan();
+				outtextxy(370, 520, "Ko co dinh de xoa");
+				break;
+			}
+			break;
+		case 17:
+			if (n>0)
+			{
+				MoveDinh();
+			}
+			else
+			{
+			HuongDan();
+				outtextxy(370, 520, "Co dinh deo dau ma doi");
+				break;	
+			}
+			break;
+		case 18:
+			if (n>0)
+			{
+				DoiTenDinh();
+			}
+			else
+			{
+			HuongDan();
+				outtextxy(370, 520, "Co dinh deo dau ma doi");
+				break;	
+			}
+			break;
+		case 19:
+			Info();
+			break;
+		}
+	}
+	
 	
 	
 	
